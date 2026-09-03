@@ -6,27 +6,27 @@ entry_points:
     parameters:
 
       input_artifact:
-        description: ## ADD DESCRIPTION
+        description: Fully-qualified name of the input W&B artifact to be cleaned (e.g. sample.csv:latest)
         type: string
 
       output_artifact:
-        description: ## ADD DESCRIPTION
+        description: Name for the output (cleaned) artifact to be created and logged to W&B (e.g. clean_sample.csv)
         type: string
 
       output_type:
-        description: ## ADD DESCRIPTION
+        description: Type/label assigned to the output artifact (e.g. clean_sample)
         type: string
 
       output_description:
-        description: ## ADD DESCRIPTION
+        description: A brief description of the output artifact and the cleaning applied
         type: string
 
       min_price:
-        description: ## ADD DESCRIPTION
+        description: Minimum price threshold; rows with a price below this value are dropped as outliers
         type: string
 
       max_price:
-        description: ## ADD DESCRIPTION
+        description: Maximum price threshold; rows with a price above this value are dropped as outliers
         type: string
 
 
