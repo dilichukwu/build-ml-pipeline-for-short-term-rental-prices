@@ -18,23 +18,27 @@ def go(args):
 
     # Download input artifact. This will also log that this script is using this
     logger.info("Downloading input artifact: %s", args.input_artifact)
-    artifact_local_path = run.use_artifact(args.input_artifact).file()
-    # particular version of the artifact
-    # artifact_local_path = run.use_artifact(args.input_artifact).file()
 
-    ######################
-    # YOUR CODE HERE     #
-    
+    # particular version of the artifact
+    artifact_local_path = run.use_artifact(args.input_artifact).file()
     df = pd.read_csv(artifact_local_path)    
+
+    # Remove duplicates
+    df = df.drop_duplicates()
 
     # Drop price outliers using the configurable min/max bounds
     logger.info("Dropping price outliers outside [%s, %s]", args.min_price, args.max_price)
+    df = df.dropna(subset=["price"])
     idx = df['price'].between(args.min_price, args.max_price)
     df = df[idx].copy()
 
     # Convert last_review to a proper datetime
     logger.info("Converting last_review to datetime")
     df['last_review'] = pd.to_datetime(df['last_review'])
+
+    # Removes rows whose longitudes and latitudes fall outside the expect NYC boundaries
+    idx = df["longitude"].between(-74.25, -73.50) & df["latitude"].between(40.5, 41.2)
+    df = df[idx].copy()
 
     # Save the cleaned data (index=False so we don't add an extra column)
     logger.info("Saving cleaned dataframe to %s", args.output_artifact)
