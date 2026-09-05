@@ -23,11 +23,11 @@ entry_points:
 
       min_price:
         description: Minimum price threshold; rows with a price below this value are dropped as outliers
-        type: string
+        type: float
 
       max_price:
         description: Maximum price threshold; rows with a price above this value are dropped as outliers
-        type: string
+        type: float
 
 
     command: >-
